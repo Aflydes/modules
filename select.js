@@ -1,12 +1,30 @@
-export default class Select{
+/* Пример использования селекта:
+* - Классы с префиксом js- используются для выполнения скриптов
+*  <div class="select-element">
+*    <span class="js-select-current placeholder">Выберите вариант</span>
+* - Класс placeholder для изменения стилей, если стили вводимого текста отличаются от текста заполнителя
+*    <ul class="">
+*         <li data-value="Вариант 1">Вариант 1</li>
+*         <li data-value="Вариант 2">Вариант 2</li>
+*         <li data-value="Вариант 3">Вариант 3</li>
+*    </ul>
+*    <input type="hidden" name="selectName" class="js-select--hidden">
+*  </div>
+*  Пример js:
+*  const select = new Select(document.querySelector('.select-element');
+* - в конструктор нужно передать dom-элемент кастомного селекта.
+*  select.element.addEventListener('click', () => select.Handler());
+* - при создании, сам элемент записывается в select.element
+*/
+
+class Select{
     constructor(select){
         this.element = select;
     }
     Handler(){
-
         this.options = this.element.querySelectorAll('li');
-        this.currentOptionEl = this.element.querySelector('.form__input-select-current');
-        this.hideInput = this.element.querySelector('.form__input-select--hidden');
+        this.currentOptionEl = this.element.querySelector('.js-select-current');
+        this.hideInput = this.element.querySelector('.js-select--hidden');
 
         if(this.element.classList.contains('active')){
 
@@ -25,7 +43,7 @@ export default class Select{
         }
     }
     OptionsHandler(option){
-        let value = option.innerHTML;
+        let value = option.dataset.value;
 
         this.hideInput.value = value;
         this.currentOptionEl.innerHTML = value;
